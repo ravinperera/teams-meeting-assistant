@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1680" height="900" viewBox="0 0 1680 900" role="img" aria-labelledby="title desc">
+  <title id="title">Local Meeting Assistant architecture</title>
+  <desc id="desc">Microsoft Teams desktop audio and the user's microphone are captured locally, transcribed on device, written as a protected rolling JSON transcript, and read by a read-only MCP server. A visible Teams screen share is inspected by Codex computer use. Codex combines transcript text and visible screen context into text guidance.</desc>
+  <defs>
+    <linearGradient id="canvas" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#f8fbff"/>
+      <stop offset="1" stop-color="#edf4fb"/>
+    </linearGradient>
+    <linearGradient id="codex" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#102744"/>
+      <stop offset="1" stop-color="#0b1830"/>
+    </linearGradient>
+    <filter id="soft-shadow" x="-20%" y="-30%" width="150%" height="170%">
+      <feDropShadow dx="0" dy="7" stdDeviation="11" flood-color="#284260" flood-opacity="0.10"/>
+    </filter>
+    <style>
+      .display { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .title { fill: #142944; font-size: 38px; font-weight: 760; letter-spacing: -1.2px; }
+      .subtitle { fill: #58708a; font-size: 17px; }
+      .eyebrow { fill: #5c7591; font-size: 14px; font-weight: 760; letter-spacing: 2.1px; }
+      .node-title { fill: #1d344d; font-size: 20px; font-weight: 720; }
+      .node-copy { fill: #60758a; font-size: 15px; }
+      .small { fill: #657b90; font-size: 13px; }
+      .flow { fill: none; stroke: #7694b4; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+      .screen-flow { fill: none; stroke: #31a6aa; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+      .pill { fill: #e7f4f1; }
+      .pill-text { fill: #176c67; font-size: 13px; font-weight: 680; }
+    </style>
+  </defs>
+
+  <rect width="1680" height="900" fill="url(#canvas)"/>
+  <g class="display">
+    <text x="52" y="72" class="title">How Local Meeting Assistant works</text>
+    <text x="54" y="107" class="subtitle">Meeting audio is transcribed on your Mac; Codex reads text and the screen content you make visible.</text>
+
+    <rect x="48" y="145" width="1104" height="652" rx="25" fill="#ffffff" stroke="#dce7f2" stroke-width="2" filter="url(#soft-shadow)"/>
+    <rect x="48" y="145" width="1104" height="63" rx="25" fill="#f3f8fd"/>
+    <rect x="48" y="180" width="1104" height="28" fill="#f3f8fd"/>
+    <text x="78" y="185" class="eyebrow">ON YOUR MAC</text>
+    <text x="1080" y="185" class="small" text-anchor="end">Audio stays in memory</text>
+
+    <rect x="1182" y="145" width="450" height="652" rx="25" fill="url(#codex)" filter="url(#soft-shadow)"/>
+    <text x="1220" y="185" fill="#9edbdc" font-size="14" font-weight="750" letter-spacing="2.1">CODEX</text>
+    <text x="1220" y="235" fill="#ffffff" font-size="30" font-weight="750">Live text guidance</text>
+    <text x="1220" y="267" fill="#bfd0e1" font-size="16">Grounded in what is said and shown.</text>
+
+    <!-- Audio inputs and processing, behind the cards. -->
+    <path class="flow" d="M304 322 C326 322 322 368 339 368"/>
+    <path class="flow" d="M304 477 C326 477 322 403 339 403"/>
+    <path class="flow" d="M579 385 H606"/>
+    <path class="flow" d="M857 385 H886"/>
+    <path class="flow" d="M1005 477 V521"/>
+    <path class="flow" d="M1111 598 C1143 598 1143 446 1170 446"/>
+    <path class="screen-flow" d="M354 688 H408"/>
+    <path class="screen-flow" d="M718 688 H1170"/>
+    <path d="M339 368 L327 361 V375 Z M339 403 L327 396 V410 Z M606 385 L594 378 V392 Z M886 385 L874 378 V392 Z M1170 446 L1158 439 V453 Z" fill="#7694b4"/>
+    <path d="M1005 521 L998 509 H1012 Z" fill="#7694b4"/>
+    <path d="M408 688 L396 681 V695 Z M1170 688 L1158 681 V695 Z" fill="#31a6aa"/>
+    <text x="1138" y="517" class="small" text-anchor="end">text only</text>
+    <text x="927" y="673" class="small" text-anchor="middle">visible screen context</text>
+
+    <!-- Microsoft Teams output. -->
+    <rect x="77" y="260" width="227" height="124" rx="17" fill="#f2f5ff" stroke="#bfcdfb" stroke-width="2"/>
+    <rect x="77" y="260" width="7" height="124" rx="3" fill="#677be7"/>
+    <circle cx="109" cy="299" r="16" fill="#dce4ff"/>
+    <path d="M102 299 H106 L110 294 V304 L106 300 H102 Z M113 295 Q121 299 113 303" fill="none" stroke="#536add" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+    <text x="134" y="303" class="node-title">Teams output</text>
+    <text x="102" y="342" class="node-copy">Desktop app audio only</text>
+    <text x="102" y="364" class="small">No Teams transcription</text>
+
+    <!-- User microphone. -->
+    <rect x="77" y="415" width="227" height="124" rx="17" fill="#f0faf5" stroke="#c0e9d1" stroke-width="2"/>
+    <rect x="77" y="415" width="7" height="124" rx="3" fill="#44b381"/>
+    <circle cx="109" cy="454" r="16" fill="#d7f3e3"/>
+    <rect x="105" y="446" width="8" height="13" rx="4" fill="#299369"/>
+    <path d="M101 455 Q101 463 109 463 Q117 463 117 455 M109 463 V469 M104 469 H114" fill="none" stroke="#299369" stroke-width="2" stroke-linecap="round"/>
+    <text x="134" y="458" class="node-title">Your microphone</text>
+    <text x="102" y="497" class="node-copy">Your side of the call</text>
+    <text x="102" y="519" class="small">Separate audio stream</text>
+
+    <!-- Capture stage. -->
+    <rect x="351" y="300" width="228" height="170" rx="18" fill="#ffffff" stroke="#cbd9e7" stroke-width="2" filter="url(#soft-shadow)"/>
+    <rect x="374" y="325" width="40" height="40" rx="12" fill="#e9f0fa"/>
+    <path d="M383 345 H387 L390 337 L394 354 L398 341 L402 345 H406" fill="none" stroke="#426eaa" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="374" y="395" class="node-title">Local capture</text>
+    <text x="374" y="423" class="node-copy">Core Audio app tap</text>
+    <text x="374" y="446" class="node-copy">+ AVAudioEngine</text>
+
+    <!-- Speech stage. -->
+    <rect x="618" y="300" width="239" height="170" rx="18" fill="#f8f3ff" stroke="#d9c6ef" stroke-width="2"/>
+    <rect x="641" y="325" width="40" height="40" rx="12" fill="#ebdffb"/>
+    <path d="M650 349 V341 M656 355 V335 M662 350 V340 M668 355 V335 M674 349 V341" stroke="#8c5ec0" stroke-width="2.5" stroke-linecap="round"/>
+    <text x="641" y="395" class="node-title">On-device speech</text>
+    <text x="641" y="423" class="node-copy">Apple SpeechAnalyzer</text>
+    <text x="641" y="446" class="node-copy">Partial + final text</text>
+
+    <!-- Private text file. -->
+    <rect x="898" y="300" width="213" height="177" rx="18" fill="#fffaf0" stroke="#f0d9a6" stroke-width="2"/>
+    <rect x="922" y="324" width="38" height="42" rx="7" fill="#fae9c4"/>
+    <path d="M931 336 H952 M931 343 H952 M931 350 H946" stroke="#a47622" stroke-width="2.2" stroke-linecap="round"/>
+    <text x="922" y="395" class="node-title">Rolling transcript</text>
+    <text x="922" y="422" class="node-copy">live.json</text>
+    <text x="922" y="445" class="small">Private file · 1,000 lines</text>
+
+    <!-- Read-only MCP. -->
+    <rect x="898" y="533" width="213" height="131" rx="18" fill="#f0f7ff" stroke="#c5dcef" stroke-width="2"/>
+    <text x="922" y="568" class="node-title">Read-only MCP</text>
+    <text x="922" y="596" class="node-copy">get_status</text>
+    <text x="922" y="620" class="node-copy">get_recent_transcript</text>
+    <rect x="922" y="634" width="97" height="23" rx="11" class="pill"/>
+    <text x="970" y="650" class="pill-text" text-anchor="middle">No writes</text>
+
+    <!-- Visible screen path. -->
+    <rect x="77" y="625" width="277" height="126" rx="18" fill="#effbfa" stroke="#bce6e2" stroke-width="2"/>
+    <rect x="100" y="649" width="45" height="32" rx="5" fill="#d8f2ef" stroke="#5fbcb6" stroke-width="2"/>
+    <path d="M106 673 L115 662 L122 668 L129 658 L139 673" fill="none" stroke="#399b98" stroke-width="2" stroke-linejoin="round"/>
+    <text x="159" y="672" class="node-title">Visible Teams share</text>
+    <text x="100" y="714" class="node-copy">Shown on your screen</text>
+    <text x="100" y="737" class="small">Companion saves no screenshots</text>
+
+    <rect x="420" y="625" width="298" height="126" rx="18" fill="#effbfa" stroke="#bce6e2" stroke-width="2"/>
+    <rect x="444" y="649" width="42" height="36" rx="8" fill="#d8f2ef"/>
+    <circle cx="465" cy="667" r="9" fill="none" stroke="#399b98" stroke-width="2.3"/>
+    <circle cx="465" cy="667" r="3" fill="#399b98"/>
+    <text x="499" y="672" class="node-title">Codex screen view</text>
+    <text x="444" y="714" class="node-copy">Read-only computer use</text>
+    <text x="444" y="737" class="small">During an active guidance task</text>
+
+    <!-- Guidance card. -->
+    <rect x="1218" y="309" width="378" height="325" rx="19" fill="#192f4d" stroke="#3b5775" stroke-width="1.5"/>
+    <text x="1247" y="354" fill="#ffffff" font-size="22" font-weight="700">What you get</text>
+    <circle cx="1255" cy="401" r="5" fill="#6fe1db"/>
+    <text x="1274" y="407" fill="#e5f0f9" font-size="17">What participants said</text>
+    <circle cx="1255" cy="451" r="5" fill="#6fe1db"/>
+    <text x="1274" y="457" fill="#e5f0f9" font-size="17">What the shared screen shows</text>
+    <circle cx="1255" cy="501" r="5" fill="#6fe1db"/>
+    <text x="1274" y="507" fill="#e5f0f9" font-size="17">Questions and corrections</text>
+    <line x1="1247" y1="544" x2="1565" y2="544" stroke="#385774" stroke-width="1.5"/>
+    <text x="1247" y="576" fill="#a9c6da" font-size="15">Text and visible screen context are</text>
+    <text x="1247" y="599" fill="#a9c6da" font-size="15">sent to Codex for analysis.</text>
+
+    <text x="1218" y="746" fill="#b6cfdf" font-size="15">Guidance runs while the task is active.</text>
+    <text x="1218" y="771" fill="#81a5bf" font-size="14">Stop local audio with Ctrl+C.</text>
+
+    <!-- Footer. -->
+    <circle cx="65" cy="846" r="5" fill="#42af90"/>
+    <text x="80" y="852" fill="#48627e" font-size="16">Explicit start</text>
+    <circle cx="274" cy="846" r="5" fill="#42af90"/>
+    <text x="289" y="852" fill="#48627e" font-size="16">No Teams transcription or recording</text>
+    <circle cx="678" cy="846" r="5" fill="#42af90"/>
+    <text x="693" y="852" fill="#48627e" font-size="16">No audio file saved</text>
+  </g>
+</svg>

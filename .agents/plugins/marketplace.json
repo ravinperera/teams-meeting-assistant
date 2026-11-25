@@ -1,0 +1,16 @@
+{
+  "name": "meeting-assistant-local",
+  "interface": {
+    "displayName": "Local Meeting Assistant"
+  },
+  "plugins": [
+    {
+      "name": "meeting-assistant",
+      "source": {
+        "source": "local",
+        "path": "./plugin/meeting-assistant"
+      },
+      "category": "mcp"
+    }
+  ]
+}

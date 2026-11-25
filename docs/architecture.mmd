@@ -1,0 +1,12 @@
+flowchart LR
+  subgraph Mac["On your Mac"]
+    Teams["Microsoft Teams desktop audio"] --> Tap["Core Audio app-scoped tap"]
+    Mic["Your microphone"] --> Engine["AVAudioEngine"]
+    Tap --> Speech["On-device SpeechAnalyzer"]
+    Engine --> Speech
+    Speech --> Text["Rolling live.json transcript<br/>0600 file · latest 1,000 segments"]
+    Text --> MCP["Read-only MCP tools"]
+    Share["Visible Teams screen share"] --> CUA["Read-only computer-use inspection"]
+  end
+  MCP -- "transcript text" --> Codex["Codex text guidance"]
+  CUA -- "visible screen context" --> Codex
