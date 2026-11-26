@@ -86,10 +86,10 @@ public final class MeetingAudioCapture {
         guard authorized else { throw MeetingAudioCaptureError.microphonePermissionDenied }
 
         let gate = AudioDeliveryGate()
-        let tap = TeamsProcessAudioTap(bundleIDs: teamsBundleIDs) { buffer, time in
-            guard gate.isOpen else { return }
-            onSystemBuffer(buffer, time)
-        }
+        let tap = TeamsProcessAudioTap(
+            bundleIDs: teamsBundleIDs,
+            onBuffer: gatedSystemBufferHandler(gate: gate, onBuffer: onSystemBuffer)
+        )
 
         do {
             try tap.start()
@@ -101,10 +101,12 @@ public final class MeetingAudioCapture {
                 throw MeetingAudioCaptureError.microphoneFormatUnavailable
             }
 
-            input.installTap(onBus: 0, bufferSize: 1024, format: format) { buffer, time in
-                guard gate.isOpen, let owned = MeetingAudioBuffers.ownedCopy(of: buffer) else { return }
-                onMicBuffer(owned, time)
-            }
+            input.installTap(
+                onBus: 0,
+                bufferSize: 1024,
+                format: format,
+                block: microphoneTapHandler(gate: gate, onBuffer: onMicBuffer)
+            )
             do {
                 try engine.start()
             } catch {
@@ -144,6 +146,28 @@ public final class MeetingAudioCapture {
         return Array(Set(running.filter { bundleID in
             roots.contains(bundleID) || roots.contains(where: { bundleID.hasPrefix($0 + ".") })
         })).sorted()
+    }
+}
+
+// Core Audio and AVAudioEngine invoke these callbacks on their own queues.
+// Form them outside MeetingAudioCapture's MainActor isolation.
+private func gatedSystemBufferHandler(
+    gate: AudioDeliveryGate,
+    onBuffer: @escaping MeetingAudioBufferHandler
+) -> MeetingAudioBufferHandler {
+    { buffer, time in
+        guard gate.isOpen else { return }
+        onBuffer(buffer, time)
+    }
+}
+
+private func microphoneTapHandler(
+    gate: AudioDeliveryGate,
+    onBuffer: @escaping MeetingAudioBufferHandler
+) -> AVAudioNodeTapBlock {
+    { buffer, time in
+        guard gate.isOpen, let owned = MeetingAudioBuffers.ownedCopy(of: buffer) else { return }
+        onBuffer(owned, time)
     }
 }
 

@@ -86,9 +86,11 @@ Do not assume local capture is silent to other participants.
 - This is a macOS source build, with no Windows, Linux, or browser Teams support.
 - Speech is labeled **system** (Teams output) or **mic** (you); individual remote
   speakers are not identified.
+- Microphone pickup can repeat Teams speech in the **mic** transcript even though
+  the audio streams are captured separately. Echo mitigation needs a live test.
 - Screen inspection requires a visible Teams share and an active Codex task.
-- The first live Teams audio tap and macOS permission flow still need an
-  end-to-end test. The checks below use synthetic input.
+- One live Teams meeting on macOS 27.2.1 exercised audio capture and clean
+  shutdown; other devices and permission states still need live validation.
 
 ## Checks
 
